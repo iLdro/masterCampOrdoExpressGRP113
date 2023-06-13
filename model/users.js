@@ -2,28 +2,28 @@ const mongoose = require('mongoose')
 
 
 const userSchema = new mongoose.Schema({
-  firstname : {
+  firstname: {
     type: String,
     required: true,
   },
-  name : {
+  name: {
     type: String,
     required: true,
-    },
-    email : {
-        type: String,
-        required: true,
-        unique: true,
-    },
-    password : {
-        type: String,
-        required: true,
-    },
-    carteVitale : {
-        type: String,
-        required: false,
-        unique: true,
-    },
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  carteVitale: {
+    type: String,
+    required: false,
+    unique: true,
+  },
 });
 
 const User = mongoose.model('users', userSchema);
