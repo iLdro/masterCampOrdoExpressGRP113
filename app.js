@@ -28,3 +28,10 @@ app.post('/users', (req, res) => {
   createUser(req, res);
 }
 );
+
+app.post('/login/user', (req, res) => {
+  const token = startUserSession(req, res);
+  localStorage.setItem('token', token);
+  res.status(200).send(token);
+}
+);

@@ -21,7 +21,7 @@ const startUserSession = (req, res) => {
                 } else {
                     const token = jwt.sign({ id: user._id, userType: 1 }, process.env.JWT_SECRET)
                     req.session.token = token
-                    res.status(200).send('User logged in')
+                    res.status(200).send(token)
                 }
             })
         }
