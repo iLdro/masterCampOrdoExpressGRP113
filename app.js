@@ -24,7 +24,7 @@ app.listen(3000, () => {
   console.log('Server is listening on port 3000');
 });
 
-app.post('/users', (req, res) => {
+app.post('/create/user', (req, res) => {
   createUser(req, res);
 }
 );
