@@ -38,7 +38,7 @@ const createMed = async (req, res) => {
             }
         });
         const mailOptions = {
-            from: 'mastercampordo2023@gmail.com',
+            from: 'OrdonnanceOnline',
             to: email,
             subject: 'Votre inscription sur OrdonnanceOnline',
             text : "Retrouver ci joint-votre mot de passe temporaire, nous reviendrons vers vous une fois votre inscription validée par nos services. \n" + password_tosend
@@ -58,4 +58,14 @@ const createMed = async (req, res) => {
     }
     }
 
-module.exports = createMed;
+const getPendingMed = async (req, res) => {
+    try {
+        const meds = await Meds.find({validate: false});
+        res.status(200).json(meds);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
+
+
+module.exports = {createMed, getPendingMed};

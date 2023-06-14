@@ -6,9 +6,10 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-const createUser = require('./dist/createUser.js');
-const startUserSession = require('./auth/authSession.js');
-const createMed = require('./dist/createMed.js');
+const createUser = require('./dist/userFonction.js');
+const {startUserSession, startMedSession, startPharmacianSession} = require('./auth/authSession.js');
+const {createMed, getPendingMed} = require('./dist/medFonction.js');
+const {createPharmacian, getPendingPharmacian} = require('./dist/pharmacianFonction.js');
 
 const app = express();
 
@@ -66,9 +67,27 @@ app.post('/create/med', (req, res) => {
 }
 );
 
+app.post('/create/pharmacien', (req, res) => {
+  createPharmacian(req, res);
+}
+);
+
+
 app.post('/login/user', (req, res) => {
   const token = startUserSession(req, res);
   localStorage.setItem('token', token);
   res.status(200).send(token);
+}
+);
+
+app.get('/admin/pendingMed', (req, res) => {
+  const pendingMed = getPendingMed(req, res);
+  res.status(200).send(pendingMed);
+}
+);
+
+app.get('/admin/pendingPharmacien', (req, res) => {
+  const pendingPharmacien = getPendingPharmacien(req, res);
+  res.status(200).send(pendingPharmacien);
 }
 );
