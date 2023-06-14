@@ -25,7 +25,7 @@ app.use(cors({
   origin: (origin, callback) => {
       // Check if the request origin is allowed
       // You can implement your own logic here to validate the origin
-      const allowedOrigins = ['http://localhost:8081', 'http://127.0.0.1:5173'];
+      const allowedOrigins = ['http://localhost:8081', 'http://127.0.0.1:8081', 'http://10.3.219.87:8081'];
       if (!origin || allowedOrigins.includes(origin)) {
           callback(null, true);
       } else {
@@ -59,6 +59,7 @@ app.listen(PORT, () => {
 
 app.post('/create/user', (req, res) => {
   createUser(req, res);
+  console.log(req.body);
 }
 );
 
