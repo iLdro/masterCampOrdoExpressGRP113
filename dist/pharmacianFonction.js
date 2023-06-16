@@ -1,7 +1,6 @@
 const Pharmacian = require('../model/pharmarciens');
 const mongoose = require('mongoose');
 const nodemailer = require('nodemailer');
-const mdp = require('../private/mailpass');
 const bcrypt = require('bcrypt');
 
 
@@ -31,7 +30,7 @@ const createMed = async (req, res) => {
             service: 'gmail',
             auth: {
                 user: 'mastercampordo2023@gmail.com ',
-                pass: mdp
+                pass: process.env.MAILPASS
             }
         });
         const mailOptions = {
