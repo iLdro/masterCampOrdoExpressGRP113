@@ -9,7 +9,7 @@ const cors = require('cors');
 const localStorage = require('localStorage');
 
 const createUser = require('./dist/userFonction.js');
-const {startUserSession, startMedSession, startPharmacianSession} = require('./auth/authSession.js');
+const startUserSession = require('./auth/authSession.js');
 const {createMed, getPendingMed} = require('./dist/medFonction.js');
 const {createPharmacian, getPendingPharmacian} = require('./dist/pharmacianFonction.js');
 
