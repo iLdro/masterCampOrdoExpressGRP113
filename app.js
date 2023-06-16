@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 require('./mongo/db.js');
@@ -5,6 +6,7 @@ const key = require('./auth/creation/keyGenerator.js');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const localStorage = require('localStorage');
 
 const createUser = require('./dist/userFonction.js');
 const {startUserSession, startMedSession, startPharmacianSession} = require('./auth/authSession.js');
@@ -49,8 +51,9 @@ const fakeUser = {
   carteVitale: 'machin',
 };
 
-app.get('/', (req, res) => {
+app.get('/', (req, res, next) => {
   res.send(fakeUser);
+  next();
 });
 
 app.listen(PORT, () => {
@@ -76,8 +79,7 @@ app.post('/create/pharmacien', (req, res) => {
 
 app.post('/login/user', (req, res) => {
   const token = startUserSession(req, res);
-  localStorage.setItem('token', token);
-  res.status(200).send(token);
+  console.log(token);
 }
 );
 
