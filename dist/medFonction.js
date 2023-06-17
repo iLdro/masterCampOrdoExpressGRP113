@@ -2,11 +2,13 @@ const Meds = require('../model/meds');
 const mongoose = require('mongoose');
 const nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt');
+const { ObjectId } = require('mongoose').Types;
+
 
 
 const createMed = async (req, res) => {
     var { name, firstname, numberStreet, street, city, postalCode, phoneNumber, email, profINSEE, RPPS, signature} = req.body;
-    var validate = false;
+    var validation = false;
     //Generate a random password
     var password_tosend = Math.random().toString(36).slice(-8);
     //Hash the password
@@ -24,7 +26,7 @@ const createMed = async (req, res) => {
         profINSEE,
         RPPS,
         signature,
-        validate
+        validation
     });
     
     try {
@@ -66,5 +68,21 @@ const getPendingMed = async (req, res) => {
     }
 }
 
+const validateMed = async (req, res) => {
+    const { id } = req.body;
+    try {
+      const objectId = new ObjectId(id);
+      console.log(objectId);
+      const med = await Meds.findById(objectId);
+      if (!med) {
+        return res.status(404).json({ message: 'Med not found' + id + ' ' + objectId});
+      }
+      med.validation = true;
+      const medObject = med.toObject();
+      res.status(200).json(medObject);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
 
-module.exports = {createMed, getPendingMed};
+module.exports = {createMed, getPendingMed, validateMed};

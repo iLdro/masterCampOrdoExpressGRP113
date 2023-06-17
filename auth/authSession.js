@@ -3,17 +3,17 @@ const jwt = require('jsonwebtoken')
 const User = require('../model/users.js')
 const Med = require('../model/meds.js')
 const Pharmacian = require('../model/pharmarciens.js')
-const tokenD = require('../model/token.js')
+// const Token = require('../model/token')
 
-const newTokendb = (user, type,new_token) => {
-    const newToken = new tokenD({
-        token: new_token,
-        id: user._id,
-        type: type,
-        date: Date.now(),
-    });
-    newToken.save();
-}
+// const newTokendb = (user, type,new_token) => {
+//     const newToken = new Token({
+//         token: new_token,
+//         id: user._id,
+//         type: type,
+//         date: Date.now(),
+//     });
+//     newToken.save();
+// }
 
 
 const startUserSession = async (req, res) => {
@@ -33,8 +33,15 @@ const startUserSession = async (req, res) => {
       }
   
       const token = jwt.sign({ id: user._id, userType: 1 }, process.env.JWT_SECRET);
-      req.session.token = token;
-      newTokendb(user, 1, token);
+      try {
+        req.session.token = token;
+        req.session.user = user;
+        req.session.save();
+        } catch (error) {
+            console.log(error);
+        }
+        
+    //   newTokendb(user, 1, token);
       return res.status(200).send(token);
     } catch (error) {
       console.log(error);

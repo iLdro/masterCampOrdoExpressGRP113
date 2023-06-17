@@ -6,12 +6,12 @@ const key = require('./auth/creation/keyGenerator.js');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const localStorage = require('localStorage');
+const MongoStore = require('connect-mongodb-session')(session);
 
 const createUser = require('./dist/userFonction.js');
-const startUserSession = require('./auth/authSession.js');
-const {createMed, getPendingMed} = require('./dist/medFonction.js');
-const {createPharmacian, getPendingPharmacian} = require('./dist/pharmacianFonction.js');
+const {startUserSession, startMedSession, startPharmacianSession} = require('./auth/authSession.js');
+const {createMed, getPendingMed, validateMed} = require('./dist/medFonction.js');
+const {createPharmacian, getPendingPharmacian, validatePharmacian, getPendingPharmacien} = require('./dist/pharmacianFonction.js');
 
 const app = express();
 
@@ -43,13 +43,20 @@ const PORT = process.env.PORT || 5000;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-const fakeUser = {
-  email: 'machin@gmail.com ',
-  name: 'machin',
-  firstname: 'machin',
-  password: 'machin',
-  carteVitale: 'machin',
-};
+const  store  = new  MongoStore ({ uri : process.env.MONGO, collection : 'session' });
+
+store.on('error', function(error) {
+  console.log("error creating session",error);
+});
+
+app.use(session({
+  secret: key,
+  resave: false,
+  saveUninitialized: true,
+  store: store,
+  cookie: { secure: false }
+}));
+
 
 app.get('/', (req, res, next) => {
   res.send(fakeUser);
@@ -78,19 +85,35 @@ app.post('/create/pharmacien', (req, res) => {
 
 
 app.post('/login/user', (req, res) => {
-  const token = startUserSession(req, res);
-  console.log(token);
-}
-);
+  startUserSession(req, res)
+    .then(({ token, user }) => {
+      console.log(user);
+    })
+    .catch(error => {
+      console.log(error);
+      res.status(500).send('Internal server error');
+    });
+});
 
 app.get('/admin/pendingMed', (req, res) => {
   const pendingMed = getPendingMed(req, res);
-  res.status(200).send(pendingMed);
 }
 );
 
 app.get('/admin/pendingPharmacien', (req, res) => {
   const pendingPharmacien = getPendingPharmacien(req, res);
   res.status(200).send(pendingPharmacien);
+}
+);
+
+
+app.post('/admin/acceptMed', (req, res) => {
+  validateMed(req, res);  
+}
+);
+
+
+app.post('/admin/acceptPharmacien', (req, res) => {
+  validatePharmacien(req, res);  
 }
 );

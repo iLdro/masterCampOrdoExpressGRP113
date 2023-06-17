@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 
 const createMed = async (req, res) => {
     var { name, firstname, email, numberStreet, street, city, postalCode, phamarcieName, phoneNumber, RPPS} = req.body;
-    var validate = false;
+    var validation = false;
     var password_to_send = Math.random().toString(36).slice(-8);
     var password = await bcrypt.hash(password_to_send, 10);
     const pharmacian = new Pharmacian({
@@ -21,7 +21,7 @@ const createMed = async (req, res) => {
         phamarcieName,
         phoneNumber,
         RPPS,
-        validate
+        validation
     });
 
     try {
@@ -65,5 +65,18 @@ const getPendingPharmacien = async (req, res) => {
     }
 }
 
+const validatePharmacien = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const objectId = mongoose.Types.ObjectId(id);
+        const pharmacien = await Pharmacian.findById(objectId); 
+        pharmacien.validation = true;
+        const pharmObject = pharmacien.toObject();
+        res.status(200).json(pharmObject);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
 
-module.exports = {createMed, getPendingPharmacien};
+
+module.exports = {createMed, getPendingPharmacien, validatePharmacien};

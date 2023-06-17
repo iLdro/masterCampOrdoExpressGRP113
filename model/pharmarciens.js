@@ -45,7 +45,7 @@ const pharmarcienSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    validate : {
+    validation : {
         type: Boolean,
         required: true,
     },
