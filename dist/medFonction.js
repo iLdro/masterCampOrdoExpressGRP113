@@ -124,4 +124,4 @@ const declineMed = async (req, res) => {
 
 
 
-module.exports = {createMed, getPendingMed, validateMed , getMedById};
+module.exports = {createMed, getPendingMed, validateMed , getMedById, declineMed};
