@@ -81,7 +81,7 @@ const validatePharmacien = async (req, res) => {
 }
 
 
-const deletePharmacien = async (req, res) => {
+const declinePharmarcien = async (req, res) => {
     const { id } = req.body;
     try {
         const objectId =  new Object(id);
@@ -93,4 +93,4 @@ const deletePharmacien = async (req, res) => {
 }
 
 
-module.exports = {createPharmacian, getPendingPharmacien, validatePharmacien, deletePharmacien};
+module.exports = {createPharmacian, getPendingPharmacien, validatePharmacien, declinePharmarcien};
