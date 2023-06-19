@@ -11,7 +11,7 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const createUser = require('./dist/userFonction.js');
 const {startUserSession, startMedSession, startPharmacianSession} = require('./auth/authSession.js');
 const {createMed, getPendingMed, validateMed, getMedById, declineMed} = require('./dist/medFonction.js');
-const {createPharmacian, getPendingPharmacian, validatePharmacian, getPendingPharmacien, declinePharmarcien} = require('./dist/pharmacianFonction.js');
+const {createPharmacian, getPendingPharmacian, validatePharmacien, getPendingPharmacien, declinePharmarcien} = require('./dist/pharmacianFonction.js');
 
 const app = express();
 
