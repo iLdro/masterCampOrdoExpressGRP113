@@ -84,7 +84,7 @@ const validatePharmacien = async (req, res) => {
 const deletePharmacien = async (req, res) => {
     const { id } = req.body;
     try {
-        const objectId = mongoose.Types.ObjectId(id);
+        const objectId =  new Object(id);
         const pharmacien = await Pharmacian.findByIdAndDelete(objectId);
         res.status(200).json(pharmacien);
     } catch (error) {
