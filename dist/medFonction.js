@@ -61,7 +61,7 @@ const createMed = async (req, res) => {
 
 const getPendingMed = async (req, res) => {
     try {
-        const meds = await Meds.find({validate: false});
+        const meds = await Meds.find({validation: false});
         res.status(200).json(meds);
     } catch (error) {
         res.status(404).json({ message: error.message });
