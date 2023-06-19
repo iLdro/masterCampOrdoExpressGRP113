@@ -91,4 +91,4 @@ const deletePharmacien = async (req, res) => {
 }
 
 
-module.exports = {createMed, getPendingPharmacien, validatePharmacien};
+module.exports = {createMed, getPendingPharmacien, validatePharmacien, deletePharmacien};
