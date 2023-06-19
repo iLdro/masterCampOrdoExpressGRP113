@@ -58,7 +58,7 @@ const createPharmacian = async (req, res) => {
 
 const getPendingPharmacien = async (req, res) => {
     try {
-        const pharmacien = await Pharmacian.find({validate: false});
+        const pharmacien = await Pharmacian.find({validation: false});
         res.status(200).json(pharmacien);
     } catch (error) {
         res.status(404).json({ message: error.message });
