@@ -90,7 +90,7 @@ const validateMed = async (req, res) => {
 
   
 const getMedById = async(req, res) => {
-    const { id } = req.params;
+    const { id } = req.body;
     try {
         const objectId = new ObjectId(id);
         const med = await Meds.findById(objectId);
@@ -107,7 +107,7 @@ const getMedById = async(req, res) => {
 
 
 const declineMed = async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.body;
     try {
         const objectId = new ObjectId(id);
         const med = await Meds.findByIdAndDelete(objectId);

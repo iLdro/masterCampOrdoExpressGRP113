@@ -66,7 +66,7 @@ const getPendingPharmacien = async (req, res) => {
 }
 
 const validatePharmacien = async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.body;
     try {
         const objectId = mongoose.Types.ObjectId(id);
         const pharmacien = await Pharmacian.findById(objectId); 
@@ -80,7 +80,7 @@ const validatePharmacien = async (req, res) => {
 
 
 const deletePharmacien = async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.body;
     try {
         const objectId = mongoose.Types.ObjectId(id);
         const pharmacien = await Pharmacian.findByIdAndDelete(objectId);

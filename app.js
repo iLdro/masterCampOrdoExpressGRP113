@@ -111,7 +111,7 @@ app.get('/admin/pendingPharmacien', (req, res) => {
 );
 
 
-app.post('/admin/acceptMed/:id', (req, res) => {
+app.post('/admin/acceptMed', (req, res) => {
   validateMed(req, res);  
 }
 );
@@ -122,12 +122,12 @@ app.post('/admin/acceptPharmacien', (req, res) => {
 }
 );
 
-app.post('/admin/declineMed/:id', (req, res) => {
+app.post('/admin/declineMed', (req, res) => {
   declineMed(req, res);
 }
 );
 
-app.post('/admin/declinePharmacien/:id', (req, res) => {
+app.post('/admin/declinePharmacien', (req, res) => {
   declinePharmarcien(req, res);
 }
 );
