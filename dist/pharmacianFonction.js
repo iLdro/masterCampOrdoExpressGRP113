@@ -78,4 +78,17 @@ const validatePharmacien = async (req, res) => {
     }
 }
 
+
+const deletePharmacien = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const objectId = mongoose.Types.ObjectId(id);
+        const pharmacien = await Pharmacian.findByIdAndDelete(objectId);
+        res.status(200).json(pharmacien);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }   
+}
+
+
 module.exports = {createMed, getPendingPharmacien, validatePharmacien};

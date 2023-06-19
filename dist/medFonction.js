@@ -69,8 +69,9 @@ const getPendingMed = async (req, res) => {
 }
 
 const validateMed = async (req, res) => {
-    const { id } = req.body;
+    const { id } = req.params;
     try {
+        console.log(id);
       const objectId = new ObjectId(id);
       console.log(objectId);
       const med = await Meds.findById(objectId);
@@ -103,6 +104,23 @@ const getMedById = async(req, res) => {
     }
     
 }
+
+
+const declineMed = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const objectId = new ObjectId(id);
+        const med = await Meds.findByIdAndDelete(objectId);
+        if (!med) {
+            return res.status(404).json({ message: 'Med not found' });
+        }
+        const medObject = med.toObject();
+        res.status(200).json(medObject);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
 
 
 

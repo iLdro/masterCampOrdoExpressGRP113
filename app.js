@@ -10,8 +10,8 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 
 const createUser = require('./dist/userFonction.js');
 const {startUserSession, startMedSession, startPharmacianSession} = require('./auth/authSession.js');
-const {createMed, getPendingMed, validateMed, getMedById} = require('./dist/medFonction.js');
-const {createPharmacian, getPendingPharmacian, validatePharmacian, getPendingPharmacien} = require('./dist/pharmacianFonction.js');
+const {createMed, getPendingMed, validateMed, getMedById, declineMed} = require('./dist/medFonction.js');
+const {createPharmacian, getPendingPharmacian, validatePharmacian, getPendingPharmacien, declinePharmarcien} = require('./dist/pharmacianFonction.js');
 
 const app = express();
 
@@ -111,7 +111,7 @@ app.get('/admin/pendingPharmacien', (req, res) => {
 );
 
 
-app.post('/admin/acceptMed', (req, res) => {
+app.post('/admin/acceptMed/:id', (req, res) => {
   validateMed(req, res);  
 }
 );
@@ -121,6 +121,17 @@ app.post('/admin/acceptPharmacien', (req, res) => {
   validatePharmacien(req, res);  
 }
 );
+
+app.post('/admin/declineMed/:id', (req, res) => {
+  declineMed(req, res);
+}
+);
+
+app.post('/admin/declinePharmacien/:id', (req, res) => {
+  declinePharmarcien(req, res);
+}
+);
+
 
 
 app.get('/med/:id', (req, res) => {
