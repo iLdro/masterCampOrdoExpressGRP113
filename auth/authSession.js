@@ -32,14 +32,21 @@ const startUserSession = async (req, res) => {
         return res.status(401).send('Wrong password');
       }
   
-      const token = jwt.sign({ id: user._id, userType: 1 }, process.env.JWT_SECRET);
+      const token = jwt.sign({ id: user._id, userType: 1 }, process.env.JWT_SECRET, { expiresIn: '1h' });
       try {
         req.session.token = token;
         req.session.user = user;
-        req.session.save();
-        } catch (error) {
+    
+        } catch (error) { 
             console.log(error);
         }
+
+        try {
+          req.session.save();
+        } catch (error) {
+          console.log("cannot save",error);
+        }
+
         
     //   newTokendb(user, 1, token);
       return res.status(200).send(token);

@@ -6,7 +6,7 @@ const key = require('./auth/creation/keyGenerator.js');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const MongoStore = require('connect-mongodb-session')(session);
+const MongoDBStore = require('connect-mongodb-session')(session);
 
 const createUser = require('./dist/userFonction.js');
 const {startUserSession, startMedSession, startPharmacianSession} = require('./auth/authSession.js');
@@ -43,21 +43,26 @@ const PORT = process.env.PORT || 5000;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-const  store  = new  MongoStore ({ uri : process.env.MONGO, collection : 'session' });
-
-store.on('error', function(error) {
-  console.log("error creating session",error);
+const store = new MongoDBStore({
+  uri: process.env.MONGO,
+  collection: 'session',
+  expires: 1000 * 60 * 60 * 24 * 7,
 });
 
-app.use(session({
-  secret: key,
-  resave: false,
-  saveUninitialized: true,
-  store: store,
-  cookie: { secure: false }
-}));
+store.on('error', function (error) {
+  console.log('Error creating session', error);
+});
 
-
+app.use(
+  session({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: true,
+    store: store,
+    cookie: { secure: false },
+    expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
+  })
+);
 app.get('/', (req, res, next) => {
   res.send(fakeUser);
   next();
@@ -69,7 +74,7 @@ app.listen(PORT, () => {
 
 app.post('/create/user', (req, res) => {
   createUser(req, res);
-  console.log(req.body);
+  console.log("user body",req.body);
 }
 );
 
@@ -86,8 +91,8 @@ app.post('/create/pharmacien', (req, res) => {
 
 app.post('/login/user', (req, res) => {
   startUserSession(req, res)
-    .then(({ token, user }) => {
-      console.log(user);
+    .then(({ token, res }) => {
+      console.log("user",token);
     })
     .catch(error => {
       console.log(error);

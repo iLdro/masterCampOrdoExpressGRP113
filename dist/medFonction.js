@@ -78,6 +78,7 @@ const validateMed = async (req, res) => {
         return res.status(404).json({ message: 'Med not found' + id + ' ' + objectId});
       }
       med.validation = true;
+    await med.save();
       const medObject = med.toObject();
       res.status(200).json(medObject);
     } catch (error) {
