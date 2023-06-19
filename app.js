@@ -102,7 +102,6 @@ app.get('/admin/pendingMed', (req, res) => {
 
 app.get('/admin/pendingPharmacien', (req, res) => {
   const pendingPharmacien = getPendingPharmacien(req, res);
-  res.status(200).send(pendingPharmacien);
 }
 );
 
