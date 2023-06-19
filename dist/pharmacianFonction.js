@@ -72,6 +72,7 @@ const validatePharmacien = async (req, res) => {
         const objectId = new Object(id);
         const pharmacien = await Pharmacian.findById(objectId); 
         pharmacien.validation = true;
+        await pharmacien.save();
         const pharmObject = pharmacien.toObject();
         res.status(200).json(pharmObject);
     } catch (error) {
