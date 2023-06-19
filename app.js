@@ -10,7 +10,7 @@ const MongoStore = require('connect-mongodb-session')(session);
 
 const createUser = require('./dist/userFonction.js');
 const {startUserSession, startMedSession, startPharmacianSession} = require('./auth/authSession.js');
-const {createMed, getPendingMed, validateMed} = require('./dist/medFonction.js');
+const {createMed, getPendingMed, validateMed, getMedById} = require('./dist/medFonction.js');
 const {createPharmacian, getPendingPharmacian, validatePharmacian, getPendingPharmacien} = require('./dist/pharmacianFonction.js');
 
 const app = express();
@@ -27,7 +27,7 @@ app.use(cors({
   origin: (origin, callback) => {
       // Check if the request origin is allowed
       // You can implement your own logic here to validate the origin
-      const allowedOrigins = ['http://localhost:8081', 'http://127.0.0.1:8081', 'http://10.3.219.87:8081'];
+      const allowedOrigins = ['http://localhost:8081', 'http://127.0.0.1:8081', 'http://10.3.219.87:8081','http://localhost:8080'];
       if (!origin || allowedOrigins.includes(origin)) {
           callback(null, true);
       } else {
@@ -115,5 +115,11 @@ app.post('/admin/acceptMed', (req, res) => {
 
 app.post('/admin/acceptPharmacien', (req, res) => {
   validatePharmacien(req, res);  
+}
+);
+
+
+app.get('/med/:id', (req, res) => {
+  getMedById(req, res);
 }
 );
