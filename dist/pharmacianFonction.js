@@ -4,7 +4,7 @@ const nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt');
 
 
-const createMed = async (req, res) => {
+const createPharmacian = async (req, res) => {
     var { name, firstname, email, numberStreet, street, city, postalCode, phamarcieName, phoneNumber, RPPS} = req.body;
     var validation = false;
     var password_to_send = Math.random().toString(36).slice(-8);
@@ -91,4 +91,4 @@ const deletePharmacien = async (req, res) => {
 }
 
 
-module.exports = {createMed, getPendingPharmacien, validatePharmacien, deletePharmacien};
+module.exports = {createPharmacian, getPendingPharmacien, validatePharmacien, deletePharmacien};
