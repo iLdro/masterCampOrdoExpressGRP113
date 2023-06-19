@@ -68,6 +68,7 @@ const getPendingPharmacien = async (req, res) => {
 const validatePharmacien = async (req, res) => {
     const { id } = req.body;
     try {
+        console.log(id);
         const objectId = mongoose.Types.ObjectId(id);
         const pharmacien = await Pharmacian.findById(objectId); 
         pharmacien.validation = true;
