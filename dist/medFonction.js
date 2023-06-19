@@ -85,4 +85,24 @@ const validateMed = async (req, res) => {
     }
   };
 
-module.exports = {createMed, getPendingMed, validateMed};
+
+  
+const getMedById = async(req, res) => {
+    const { id } = req.params;
+    try {
+        const objectId = new ObjectId(id);
+        const med = await Meds.findById(objectId);
+        if (!med) {
+            return res.status(404).json({ message: 'Med not found' });
+        }
+        const medObject = med.toObject();
+        res.status(200).json(medObject);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+    
+}
+
+
+
+module.exports = {createMed, getPendingMed, validateMed , getMedById};

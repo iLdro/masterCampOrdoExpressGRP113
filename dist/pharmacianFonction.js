@@ -78,5 +78,4 @@ const validatePharmacien = async (req, res) => {
     }
 }
 
-
 module.exports = {createMed, getPendingPharmacien, validatePharmacien};
