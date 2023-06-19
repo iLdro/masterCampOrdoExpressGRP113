@@ -69,7 +69,7 @@ const getPendingMed = async (req, res) => {
 }
 
 const validateMed = async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.body;
     try {
         console.log(id);
       const objectId = new ObjectId(id);
