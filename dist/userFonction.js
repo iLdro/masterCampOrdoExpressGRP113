@@ -109,7 +109,8 @@ const changePassword = async (req, res) => {
 const getUser = async (req,res) => {
     const { carteVitale } = req.body;
     try {
-        const user = await User.findOne({carteVitale: carteVitale});
+        encrypted = await bcrypt.hash(carteVitale, 10);
+        const user = await User.findOne({carteVitale: encrypted});
         res.status(200).json(user);
     } catch (error) {
         res.status(404).json({ message: error.message });
