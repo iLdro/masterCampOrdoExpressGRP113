@@ -149,7 +149,7 @@ app.post('/user/resetPassword', (req, res) => {
 }
 );
 
-app.post('/pharmacian/getUser', (req, res) => {
+app.get('/docteur/getUser', (req, res) => {
   getUser(req, res);
 }
 );
