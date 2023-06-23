@@ -108,11 +108,8 @@ const changePassword = async (req, res) => {
 const getUser = async (req,res) => {
     const { carteVitale } = req.body;
     try {
-        console.log(test);
-        console.log(test2);
-        encrypted = await bcrypt.hash(carteVitale, 10);
         try {
-            const user = await User.findOne({carteVitale: encrypted});
+            const user = await User.findOne({carteVitale: carteVitale});
             res.status(200).json(user);
         } catch (error) {
             res.status(404).json({ message: 'User not found' });
