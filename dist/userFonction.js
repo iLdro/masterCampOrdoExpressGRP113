@@ -122,31 +122,6 @@ const getUser = async (req,res) => {
 }
 
 
-const meds = {
-    "meds": [
-        {
-            "nom_medoc": "Doliprane",
-            "dosage": "500mg",
-            "fréquence": "3 fois par jour",
-            "durée": "5 jours",
-        },
-        {
-            "nom_medoc": "Doliprane",
-            "dosage": "500mg",
-            "fréquence": "3 fois par jour",
-            "durée": "5 jours",
-        },
-        {
-            "nom_medoc": "Doliprane",
-            "dosage": "500mg",
-            "fréquence": "3 fois par jour",
-            "durée": "5 jours",
-        }]
-}
-
-app.get('/meds', (req, res) => {
-    res.json(meds);
-});
 
 
 module.exports = {createUser, resetPassword, changePassword, getUser} ;

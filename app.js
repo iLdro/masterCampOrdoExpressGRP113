@@ -154,3 +154,29 @@ app.post('/med/getUser', (req, res) => {
 }
 );
 
+const meds = {
+  "meds": [
+      {
+          "nom_medoc": "Doliprane",
+          "dosage": "500mg",
+          "fréquence": "3 fois par jour",
+          "durée": "5 jours",
+      },
+      {
+          "nom_medoc": "Doliprane",
+          "dosage": "500mg",
+          "fréquence": "3 fois par jour",
+          "durée": "5 jours",
+      },
+      {
+          "nom_medoc": "Doliprane",
+          "dosage": "500mg",
+          "fréquence": "3 fois par jour",
+          "durée": "5 jours",
+      }]
+}
+
+app.get('/meds', (req, res) => {
+  res.json(meds);
+});
+
