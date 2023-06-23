@@ -110,14 +110,43 @@ const getUser = async (req,res) => {
     const { carteVitale } = req.body;
     try {
         encrypted = await bcrypt.hash(carteVitale, 10);
-        const user = await User.findOne({carteVitale: encrypted});
-        res.status(200).json(user);
+        try {
+            const user = await User.findOne({carteVitale: encrypted});
+            res.status(200).json(user);
+        } catch (error) {
+            res.status(404).json({ message: 'User not found' });
+        }
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
 }
 
 
+const meds = {
+    "meds": [
+        {
+            "nom_medoc": "Doliprane",
+            "dosage": "500mg",
+            "fréquence": "3 fois par jour",
+            "durée": "5 jours",
+        },
+        {
+            "nom_medoc": "Doliprane",
+            "dosage": "500mg",
+            "fréquence": "3 fois par jour",
+            "durée": "5 jours",
+        },
+        {
+            "nom_medoc": "Doliprane",
+            "dosage": "500mg",
+            "fréquence": "3 fois par jour",
+            "durée": "5 jours",
+        }]
+}
+
+app.get('/meds', (req, res) => {
+    res.json(meds);
+});
 
 
 module.exports = {createUser, resetPassword, changePassword, getUser} ;
