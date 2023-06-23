@@ -121,7 +121,23 @@ const getUser = async (req,res) => {
 }
 
 
+const getUserById = async (req,res) => {
+    const { id } = req.body;
+    try {
+        const objectId = new Object(id);
+        try {
+            const user = await User.findById(objectId);
+            res.status(200).json(user);
+        } catch (error) {
+            res.status(404).json({ message: 'User not found' });
+        }
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
 
 
-module.exports = {createUser, resetPassword, changePassword, getUser} ;
-    
+
+
+
+module.exports = {createUser, resetPassword, changePassword, getUser, getUserById} ;
