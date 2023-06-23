@@ -6,7 +6,6 @@ const nodemailer = require('nodemailer');
 const createUser = async (req, res) => {
     var { firstname, name, email, password, carteVitale } = req.body;
     var password = await bcrypt.hash(password, 10);
-    var carteVitale = await bcrypt.hash(carteVitale, 10);
     const user = new User({
         firstname,
         name,
@@ -109,6 +108,8 @@ const changePassword = async (req, res) => {
 const getUser = async (req,res) => {
     const { carteVitale } = req.body;
     try {
+        console.log(test);
+        console.log(test2);
         encrypted = await bcrypt.hash(carteVitale, 10);
         try {
             const user = await User.findOne({carteVitale: encrypted});
