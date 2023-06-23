@@ -159,6 +159,8 @@ app.post('/med/getUser', (req, res) => {
 );
 
 const meds = {
+  "medecin_id": "6489d4dce1e3c3b567b62240",
+  "client_id" : "64958e29428e5f9a03cba8ca",
   "meds": [
       {
           "nom_medoc": "Doliprane",
