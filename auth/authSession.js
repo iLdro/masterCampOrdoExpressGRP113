@@ -36,6 +36,7 @@ const startUserSession = async (req, res) => {
       try {
         req.session.token = token;
         req.session.user = user;
+        req.session.userType = 1;
     
         } catch (error) { 
             console.log(error);

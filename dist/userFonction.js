@@ -4,14 +4,15 @@ const nodemailer = require('nodemailer');
 
 
 const createUser = async (req, res) => {
-    var { firstname, name, email, password, carteVitale } = req.body;
+    var { firstname, name, email, password, carteVitale, dateNaissance } = req.body;
     var password = await bcrypt.hash(password, 10);
     const user = new User({
         firstname,
         name,
         email,
         password,
-        carteVitale
+        carteVitale,
+        dateNaissance
     });
     
     try {

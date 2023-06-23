@@ -63,6 +63,8 @@ app.use(
     expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
   })
 );
+
+
 app.get('/', (req, res, next) => {
   res.send(fakeUser);
   next();
@@ -92,12 +94,14 @@ app.post('/create/pharmacien', (req, res) => {
 app.post('/login/user', (req, res) => {
   startUserSession(req, res)
     .then(({ token, res }) => {
-      console.log("user",token);
+      console.log("user", res);
     })
     .catch(error => {
       console.log(error);
       res.status(500).send('Internal server error');
     });
+
+    console.log("session",req.session.userType);
 });
 
 app.get('/admin/pendingMed', (req, res) => {
