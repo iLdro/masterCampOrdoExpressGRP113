@@ -1,6 +1,7 @@
 const User = require('../model/users.js');
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
+const Ordonnance = require('../model/ordonnance.js');
 
 
 const createUser = async (req, res) => {
@@ -122,6 +123,7 @@ const getUser = async (req,res) => {
 
 
 const getUserById = async (req,res) => {
+    console.log(req.body);
     const { id } = req.body;
     try {
         const objectId = new Object(id);
@@ -137,7 +139,25 @@ const getUserById = async (req,res) => {
 }
 
 
+const getOrdonnances = async (req,res) => {
+    const { id } = req.body;
+    try {
+        const objectId = new Object(id);
+        try {
+            const ordonnances = await Ordonnance.find({user_id: objectId});
+            res.status(200).json(ordonnances);
+        } catch (error) {
+            res.status(404).json({ message: 'Ordonnances not found' });
+        }
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
+
+
+            
 
 
 
-module.exports = {createUser, resetPassword, changePassword, getUser, getUserById} ;
+
+module.exports = {createUser, resetPassword, changePassword, getUser, getUserById, getOrdonnances} ;

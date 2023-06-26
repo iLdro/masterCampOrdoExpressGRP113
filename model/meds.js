@@ -31,7 +31,7 @@ const medsSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: false,
+        required: true,
     },
     password: {
         type: String,
@@ -52,7 +52,10 @@ const medsSchema = new mongoose.Schema({
     validation : {
         type: Boolean,
         required: true,
-    },
+    },intitule : {
+        type: String,
+        required: true,
+    }
 });
 
 const Meds = mongoose.model('meds', medsSchema);

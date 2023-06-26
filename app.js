@@ -8,10 +8,11 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const MongoDBStore = require('connect-mongodb-session')(session);
 
-const {createUser, resetPassword, changePassword, getUser, getUserById} = require('./dist/userFonction.js');
 const {startUserSession, startMedSession, startPharmacianSession} = require('./auth/authSession.js');
+const {createUser, resetPassword, changePassword, getUser, getUserById, getOrdonnances} = require('./dist/userFonction.js');
 const {createMed, getPendingMed, validateMed, getMedById, declineMed} = require('./dist/medFonction.js');
 const {createPharmacian, getPendingPharmacian, validatePharmacien, getPendingPharmacien, declinePharmarcien} = require('./dist/pharmacianFonction.js');
+const {getOrdonnance} = require('./dist/ordonnance.js');
 
 const app = express();
 
@@ -142,7 +143,7 @@ app.post('/user/changePassword', (req, res) => {
 );
 
 
-app.get('/med/:id', (req, res) => {
+app.post('/medById', (req, res) => {
   getMedById(req, res);
 }
 );
@@ -162,6 +163,15 @@ app.post('/med/getUserById', (req, res) => {
   getUserById(req, res);
 }
 );
+
+app.post("/user/getOrdonnances", (req, res) => {
+  getOrdonnances(req, res);
+});
+
+app.post("/ordonnance/getOrdonnance", (req, res) => {
+  getOrdonnance(req, res);
+});
+
 
 
 const meds = {

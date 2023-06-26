@@ -7,7 +7,7 @@ const { ObjectId } = require('mongoose').Types;
 
 
 const createMed = async (req, res) => {
-    var { name, firstname, numberStreet, street, city, postalCode, phoneNumber, email, profINSEE, RPPS, signature} = req.body;
+    var { name, firstname, numberStreet, street, city, postalCode, phoneNumber, email, profINSEE, RPPS, signature, intitule} = req.body;
     var validation = false;
     //Generate a random password
     var password_tosend = Math.random().toString(36).slice(-8);
@@ -26,7 +26,8 @@ const createMed = async (req, res) => {
         profINSEE,
         RPPS,
         signature,
-        validation
+        validation,
+        intitule
     });
     
     try {
@@ -90,9 +91,10 @@ const validateMed = async (req, res) => {
 
   
 const getMedById = async(req, res) => {
+    console.log(req.body);
     const { id } = req.body;
     try {
-        const objectId = new ObjectId(id);
+        const objectId = new Object(id);
         const med = await Meds.findById(objectId);
         if (!med) {
             return res.status(404).json({ message: 'Med not found' });
