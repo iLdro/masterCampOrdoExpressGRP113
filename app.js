@@ -168,7 +168,7 @@ app.post("/user/getOrdonnances", (req, res) => {
   getOrdonnances(req, res);
 });
 
-app.post("/ordonnance/getOrdonnance", (req, res) => {
+app.post("/pharmacien/getOrdonnance", (req, res) => {
   getOrdonnance(req, res);
 });
 
