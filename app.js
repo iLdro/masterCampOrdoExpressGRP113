@@ -128,7 +128,7 @@ app.post('/login/pharmacien', (req, res) => {
     });
 });
 
-app.get('/login/admin', (req, res) => {
+app.post('/login/admin', (req, res) => {
   startAdminSession(req, res)
     .then(({ token, res }) => {
       console.log("admin", res);

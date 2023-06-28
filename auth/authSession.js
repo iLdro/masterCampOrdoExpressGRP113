@@ -59,7 +59,8 @@ const startUserSession = async (req, res) => {
   };
 
 
-const startMedSession = async (req, res) => {
+  const startMedSession = async (req, res) => {
+  
     try {
         const { email, password } = req.body;
     
@@ -68,7 +69,6 @@ const startMedSession = async (req, res) => {
         if (!med) {
           return res.status(401).send('User not found');
         }
-    
         const same = await bcrypt.compare(password, med.password);
     
         if (!same) {
@@ -86,7 +86,7 @@ const startMedSession = async (req, res) => {
         return res.status(200).send(token);
       } catch (error) {
         console.log(error);
-        return res.status(500).send('Internal server error');
+        return res.status(500).send('Internal server error',error);
       }
     };
 
