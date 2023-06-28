@@ -105,6 +105,17 @@ app.post('/login/user', (req, res) => {
     console.log("session",req.session.userType);
 });
 
+app.post('/login/med', (req, res) => {
+  startMedSession(req, res)
+    .then(({ token, res }) => {
+      console.log("med", res);
+    })
+    .catch(error => {
+      console.log(error);
+      res.status(500).send('Internal server error');
+    });
+});
+
 app.get('/admin/pendingMed', (req, res) => {
   const pendingMed = getPendingMed(req, res);
 }

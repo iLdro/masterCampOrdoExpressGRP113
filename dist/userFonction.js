@@ -139,20 +139,37 @@ const getUserById = async (req,res) => {
 }
 
 
-const getOrdonnances = async (req,res) => {
+
+const getOrdonnances = async (req, res) => {
     const { id } = req.body;
     try {
-        const objectId = new Object(id);
-        try {
-            const ordonnances = await Ordonnance.find({user_id: objectId});
-            res.status(200).json(ordonnances);
-        } catch (error) {
-            res.status(404).json({ message: 'Ordonnances not found' });
-        }
+      const objectId = new Object(id);
+      try {
+        const ordonnances = await Ordonnance.find({ user_id: objectId });
+        res.status(200).json(ordonnances);
+  
+        const updateOrdonnances = ordonnances.map(async (ordonnance) => {
+          var ordonnanceDate = new Date(ordonnance.dateDeCréation);
+          var currentDate = new Date();
+  
+          var threeMonthsAgo = new Date();
+          threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
+  
+          if (ordonnanceDate < threeMonthsAgo) {
+            ordonnance.expired = true;
+            await ordonnance.save();
+          }
+        });
+  
+        await Promise.all(updateOrdonnances);
+      } catch (error) {
+        res.status(404).json({ message: 'Ordonnances not found' });
+      }
     } catch (error) {
-        res.status(404).json({ message: error.message });
+      res.status(404).json({ message: error.message });
     }
-}
+  };
+  
 
 
             
