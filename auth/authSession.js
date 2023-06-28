@@ -69,7 +69,7 @@ const startMedSession = async (req, res) => {
           return res.status(401).send('User not found');
         }
     
-        const same = await bcrypt.compare(password, user.password);
+        const same = await bcrypt.compare(password, med.password);
     
         if (!same) {
           return res.status(401).send('Wrong password');
@@ -100,7 +100,7 @@ const startPharmacianSession = async (req, res) => {
         return res.status(401).send('User not found');
         }
         
-        const same = await bcrypt.compare(password, user.password);
+        const same = await bcrypt.compare(password, pharmacian.password);
 
         if (!same) {
         return res.status(401).send('Wrong password');
