@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const MongoDBStore = require('connect-mongodb-session')(session);
 
-const {startUserSession, startMedSession, startPharmacianSession} = require('./auth/authSession.js');
+const {startUserSession, startMedSession, startPharmacianSession, startAdminSession} = require('./auth/authSession.js');
 const {createUser, resetPassword, changePassword, getUser, getUserById, getOrdonnances} = require('./dist/userFonction.js');
 const {createMed, getPendingMed, validateMed, getMedById, declineMed} = require('./dist/medFonction.js');
 const {createPharmacian, getPendingPharmacian, validatePharmacien, getPendingPharmacien, declinePharmarcien} = require('./dist/pharmacianFonction.js');
@@ -115,6 +115,31 @@ app.post('/login/med', (req, res) => {
       res.status(500).send('Internal server error');
     });
 });
+
+
+app.post('/login/pharmacien', (req, res) => {
+  startPharmacianSession(req, res)
+    .then(({ token, res }) => { 
+      console.log("pharmacien", res);
+    })
+    .catch(error => {
+      console.log(error);
+      res.status(500).send('Internal server error');
+    });
+});
+
+app.get('/login/admin', (req, res) => {
+  startAdminSession(req, res)
+    .then(({ token, res }) => {
+      console.log("admin", res);
+    })
+    .catch(error => {
+      console.log(error);
+      res.status(500).send('Internal server error');
+    });
+}
+);
+
 
 app.get('/admin/pendingMed', (req, res) => {
   const pendingMed = getPendingMed(req, res);
