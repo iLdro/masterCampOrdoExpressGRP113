@@ -1,4 +1,5 @@
 const Ordonnance = require('../model/ordonnance');
+const Doc = require('../model/doc');
 
 const getOrdonnance = async (req, res) => {
     var id = req.body.id;
@@ -27,5 +28,25 @@ const getOrdonnance = async (req, res) => {
     }
 }
 
-exports.getOrdonnance = getOrdonnance;
+
+const getImages = async (req, res) => {
+    var id = req.body.id;
+    try {
+        var ordonnance = await Doc.findById(id);
+        if (!ordonnance) {
+            return res.status(404).json({ message: 'Ordonnance not found' });
+        }
+        else {
+            res.status(200).json(ordonnance);
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+
+
+
+
+exports.getOrdonnance = {getOrdonnance, getImages};
 
