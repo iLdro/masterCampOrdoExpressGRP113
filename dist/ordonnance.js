@@ -32,6 +32,7 @@ const getOrdonnance = async (req, res) => {
 const getImages = async (req, res) => {
     var id = req.body.id;
     try {
+        id = new Object(id);
         var ordonnance = await Doc.findById(id);
         if (!ordonnance) {
             return res.status(404).json({ message: 'Ordonnance not found' });
