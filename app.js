@@ -8,11 +8,11 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const MongoDBStore = require('connect-mongodb-session')(session);
 
-const {startUserSession, startMedSession, startPharmacianSession, startAdminSession} = require('./auth/authSession.js');
-const {createUser, resetPassword, changePassword, getUser, getUserById, getOrdonnances} = require('./dist/userFonction.js');
-const {createMed, getPendingMed, validateMed, getMedById, declineMed} = require('./dist/medFonction.js');
-const {createPharmacian, getPendingPharmacian, validatePharmacien, getPendingPharmacien, declinePharmarcien} = require('./dist/pharmacianFonction.js');
-const {getOrdonnance, getImages} = require('./dist/ordonnance.js');
+const { startUserSession, startMedSession, startPharmacianSession, startAdminSession } = require('./auth/authSession.js');
+const { createUser, resetPassword, changePassword, getUser, getUserById, getOrdonnances } = require('./dist/userFonction.js');
+const { createMed, getPendingMed, validateMed, getMedById, declineMed } = require('./dist/medFonction.js');
+const { createPharmacian, getPendingPharmacian, validatePharmacien, getPendingPharmacien, declinePharmarcien } = require('./dist/pharmacianFonction.js');
+const { getOrdonnance, getImages } = require('./dist/ordonnance.js');
 
 const app = express();
 
@@ -26,14 +26,14 @@ app.use(session({
 
 app.use(cors({
   origin: (origin, callback) => {
-      // Check if the request origin is allowed
-      // You can implement your own logic here to validate the origin
-      const allowedOrigins = ['http://localhost:8081', 'http://127.0.0.1:8081', 'http://10.3.219.87:8081','http://localhost:8080'];
-      if (!origin || allowedOrigins.includes(origin)) {
-          callback(null, true);
-      } else {
-          callback(new Error('Not allowed by CORS'));
-      }
+    // Check if the request origin is allowed
+    // You can implement your own logic here to validate the origin
+    const allowedOrigins = ['http://localhost:8081', 'http://127.0.0.1:8081', 'http://10.3.219.87:8081', 'http://localhost:8080'];
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
   },
 }));
 
@@ -77,7 +77,7 @@ app.listen(PORT, () => {
 
 app.post('/create/user', (req, res) => {
   createUser(req, res);
-  console.log("user body",req.body);
+  console.log("user body", req.body);
 }
 );
 
@@ -102,7 +102,7 @@ app.post('/login/user', (req, res) => {
       res.status(500).send('Internal server error');
     });
 
-    console.log("session",req.session.userType);
+  console.log("session", req.session.userType);
 });
 
 app.post('/login/med', (req, res) => {
@@ -119,7 +119,7 @@ app.post('/login/med', (req, res) => {
 
 app.post('/login/pharmacien', (req, res) => {
   startPharmacianSession(req, res)
-    .then(({ token, res }) => { 
+    .then(({ token, res }) => {
       console.log("pharmacien", res);
     })
     .catch(error => {
@@ -153,13 +153,13 @@ app.get('/admin/pendingPharmacien', (req, res) => {
 
 
 app.post('/admin/acceptMed', (req, res) => {
-  validateMed(req, res);  
+  validateMed(req, res);
 }
 );
 
 
 app.post('/admin/acceptPharmacien', (req, res) => {
-  validatePharmacien(req, res);  
+  validatePharmacien(req, res);
 }
 );
 
@@ -174,7 +174,7 @@ app.post('/admin/declinePharmacien', (req, res) => {
 );
 
 app.post('/user/changePassword', (req, res) => {
-  changePassword(req, res);  
+  changePassword(req, res);
 }
 );
 
@@ -185,7 +185,7 @@ app.post('/medById', (req, res) => {
 );
 
 
-app.post('/user/resetPassword', (req, res) => { 
+app.post('/user/resetPassword', (req, res) => {
   resetPassword(req, res);
 }
 );
@@ -210,31 +210,31 @@ app.post("/pharmacien/getOrdonnance", (req, res) => {
 
 app.post("/user/getImages", (req, res) => {
   getImages(req, res);
-  });
-  
+});
+
 
 const meds = {
   "medecin_id": "6489d4dce1e3c3b567b62240",
-  "client_id" : "64958e29428e5f9a03cba8ca",
+  "client_id": "64958e29428e5f9a03cba8ca",
   "meds": [
-      {
-          "nom_medoc": "Doliprane",
-          "dosage": "500mg",
-          "fréquence": "3 fois par jour",
-          "durée": "5 jours",
-      },
-      {
-          "nom_medoc": "Doliprane",
-          "dosage": "500mg",
-          "fréquence": "3 fois par jour",
-          "durée": "5 jours",
-      },
-      {
-          "nom_medoc": "Doliprane",
-          "dosage": "500mg",
-          "fréquence": "3 fois par jour",
-          "durée": "5 jours",
-      }]
+    {
+      "nom_medoc": "Doliprane",
+      "dosage": "500mg",
+      "fréquence": "3 fois par jour",
+      "durée": "5 jours",
+    },
+    {
+      "nom_medoc": "Doliprane",
+      "dosage": "500mg",
+      "fréquence": "3 fois par jour",
+      "durée": "5 jours",
+    },
+    {
+      "nom_medoc": "Doliprane",
+      "dosage": "500mg",
+      "fréquence": "3 fois par jour",
+      "durée": "5 jours",
+    }]
 }
 
 app.get('/meds', (req, res) => {
