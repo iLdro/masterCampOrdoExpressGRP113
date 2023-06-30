@@ -5,7 +5,7 @@ const ordonnanceSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    user_id : {
+    client_id : {
         type: String,
         required: true,
     },
