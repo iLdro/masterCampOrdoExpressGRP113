@@ -65,9 +65,29 @@ const createOrdonnance = async (req, res) => {
     }
 }
 
+const modifyOrdonnance = async (req, res) => {
+    const { id, pharmacien_id , medicaments} = req.body;
+    try {
+
+        var ordonnance = await Ordonnance.findById(id);
+        if (!ordonnance) {
+            return res.status(404).json({ message: 'Ordonnance not found' });
+        }
+        ordonnance.pharmacien_id = pharmacien_id;
+        ordonnance.medicaments = medicaments;
+        ordonnance.expired = false;
+        await ordonnance.save();
+        res.status(200).json(ordonnance);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 
 
 
 
-module.exports = { getOrdonnance, getImages };
+
+
+
+module.exports = {createOrdonnance,modifyOrdonnance, getOrdonnance, getImages };
 
