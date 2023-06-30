@@ -12,7 +12,7 @@ const { startUserSession, startMedSession, startPharmacianSession, startAdminSes
 const { createUser, resetPassword, changePassword, getUser, getUserById, getOrdonnances } = require('./dist/userFonction.js');
 const { createMed, getPendingMed, validateMed, getMedById, declineMed } = require('./dist/medFonction.js');
 const { createPharmacian, getPendingPharmacian, validatePharmacien, getPendingPharmacien, declinePharmarcien } = require('./dist/pharmacianFonction.js');
-const { getOrdonnance, getImages } = require('./dist/ordonnance.js');
+const {createOrdonnance, modifyOrdonnance, getOrdonnance, getImages } = require('./dist/ordonnance.js');
 
 const app = express();
 
@@ -210,6 +210,14 @@ app.post("/pharmacien/getOrdonnance", (req, res) => {
 
 app.post("/user/getImages", (req, res) => {
   getImages(req, res);
+});
+
+app.post("/med/createOrdonnance", (req, res) => {
+  createOrdonnance(req, res);
+});
+
+app.post("/pharmacien/modifyOrdonnance", (req, res) => {
+  modifyOrdonnance(req, res);
 });
 
 

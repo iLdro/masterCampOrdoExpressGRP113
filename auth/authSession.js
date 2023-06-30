@@ -122,34 +122,36 @@ const startPharmacianSession = async (req, res) => {
 };
 
 
-const startAdminSession = (req, res) => {
-    const { email, password } = req.body
-
-    Admin.findOne({ email: email }, (err, admin) => {
-        if (err) {
-            console.log(err)
-            res.status(500).send('Internal server error')
-        } else if (!admin) {
-            res.status(401).send('Admin not found')
-        } else {
-            bcrypt.compare(password, admin.password, (err, same) => {
-                if (err) {
-                    console.log(err)
-                    res.status(500).send('Internal server error')
-                } else if (!same) {
-                    res.status(401).send('Wrong password')
-                } else {
-                    const token = jwt.sign({ id: admin._id, userType: 0 }, process.env.JWT_SECRET, { expiresIn: '1h' })
-                    req.session.token = token;
-                    req.session.user = admin;
-                    req.session.userType = 0;
-                    req.session.save();
-                    res.status(200).send(token)
-                }
-            })
+const startAdminSession = async (req, res) => {
+  try {
+        const { email, password } = req.body;
+  
+        const admin = await Admin.findOne({ email: email });
+  
+        if (!admin) {
+        return res.status(401).send('User not found');
         }
+        
+        const same = await bcrypt.compare(password, admin.password);
+  
+        if (!same) {
+        return res.status(401).send('Wrong password');
+        }
+  
+        const token = jwt.sign({ id: admin._id, userType: 4 }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        try {
+        req.session.token = token;
+        req.session.user = admin;
+        req.session.userType = 4;
+        } catch (error) {
+        console.log(error);
+        }
+        return res.status(200).send(token);
     }
-    )
+    catch (error) {
+        console.log(error);
+        return res.status(500).send('Internal server error');
+    }
 }
 
 
