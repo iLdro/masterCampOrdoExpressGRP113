@@ -48,9 +48,9 @@ const getImages = async (req, res) => {
 
 
 const createOrdonnance = async (req, res) => {
-    const {user_id, medecin_id, medicaments } = req.body;
+    const {client_id, medecin_id, medicaments } = req.body;
     const ordonnance = new Ordonnance({
-        user_id: user_id,
+        client_id: client_id,
         medecin_id: medecin_id,
         medicaments: medicaments,
         pharmacien_id: null,
