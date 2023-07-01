@@ -11,8 +11,8 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const { startUserSession, startMedSession, startPharmacianSession, startAdminSession } = require('./auth/authSession.js');
 const { createUser, resetPassword, changePassword, getUser, getUserById, getOrdonnances } = require('./dist/userFonction.js');
 const { createMed, getPendingMed, validateMed, getMedById, declineMed } = require('./dist/medFonction.js');
-const { createPharmacian, getPendingPharmacian, validatePharmacien, getPendingPharmacien, declinePharmarcien } = require('./dist/pharmacianFonction.js');
-const {createOrdonnance, modifyOrdonnance, getOrdonnance, getImages } = require('./dist/ordonnance.js');
+const { createPharmacian, validatePharmacien, getPendingPharmacien, declinePharmarcien, getPharmacienById } = require('./dist/pharmacianFonction.js');
+const { createOrdonnance, modifyOrdonnance, getOrdonnance, getImages } = require('./dist/ordonnance.js');
 
 const app = express();
 
@@ -199,6 +199,12 @@ app.post('/med/getUserById', (req, res) => {
   getUserById(req, res);
 }
 );
+
+app; post('/ordonnance/getPharmacian', (req, res) => {
+  getPharmacienById(req, res);
+}
+);
+
 
 app.post("/user/getOrdonnances", (req, res) => {
   getOrdonnances(req, res);

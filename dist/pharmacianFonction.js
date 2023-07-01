@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 
 
 const createPharmacian = async (req, res) => {
-    var { name, firstname, email, numberStreet, street, city, postalCode, phamarcieName, phoneNumber, RPPS} = req.body;
+    var { name, firstname, email, numberStreet, street, city, postalCode, phamarcieName, phoneNumber, RPPS } = req.body;
     var validation = false;
     var password_to_send = Math.random().toString(36).slice(-8);
     var password = await bcrypt.hash(password_to_send, 10);
@@ -37,9 +37,9 @@ const createPharmacian = async (req, res) => {
             from: 'OrdonnanceOnline',
             to: email,
             subject: 'Votre inscription sur OrdonnanceOnline',
-            text : "Retrouver ci joint-votre mot de passe temporaire, nous reviendrons vers vous une fois votre inscription validée par nos services. \n" + password_to_send
+            text: "Retrouver ci joint-votre mot de passe temporaire, nous reviendrons vers vous une fois votre inscription validée par nos services. \n" + password_to_send
         };
-        transporter.sendMail(mailOptions, function(error, info){
+        transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
                 console.log(error);
             }
@@ -58,7 +58,7 @@ const createPharmacian = async (req, res) => {
 
 const getPendingPharmacien = async (req, res) => {
     try {
-        const pharmacien = await Pharmacian.find({validation: false});
+        const pharmacien = await Pharmacian.find({ validation: false });
         res.status(200).json(pharmacien);
     } catch (error) {
         res.status(404).json({ message: error.message });
@@ -70,7 +70,7 @@ const validatePharmacien = async (req, res) => {
     try {
         console.log(id);
         const objectId = new Object(id);
-        const pharmacien = await Pharmacian.findById(objectId); 
+        const pharmacien = await Pharmacian.findById(objectId);
         pharmacien.validation = true;
         await pharmacien.save();
         const pharmObject = pharmacien.toObject();
@@ -84,13 +84,25 @@ const validatePharmacien = async (req, res) => {
 const declinePharmarcien = async (req, res) => {
     const { id } = req.body;
     try {
-        const objectId =  new Object(id);
+        const objectId = new Object(id);
         const pharmacien = await Pharmacian.findByIdAndDelete(objectId);
         res.status(200).json(pharmacien);
     } catch (error) {
         res.status(404).json({ message: error.message });
-    }   
+    }
+}
+
+const getPharmacienById = async (req, res) => {
+    const { id } = req.body;
+    try {
+        const objectId = new Object(id);
+        const pharmacien = await Pharmacian.findById(objectId);
+        res.status(200).json(pharmacien);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
 }
 
 
-module.exports = {createPharmacian, getPendingPharmacien, validatePharmacien, declinePharmarcien};
+
+module.exports = { createPharmacian, getPendingPharmacien, validatePharmacien, declinePharmarcien, getPharmacienById };
