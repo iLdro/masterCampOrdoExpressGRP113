@@ -48,7 +48,8 @@ const getImages = async (req, res) => {
 
 
 const createOrdonnance = async (req, res) => {
-    const {client_id, medecin_id, medicaments } = req.body;
+    const { client_id, medecin_id, medicaments, } = req.body;
+    console.log(req.body);
     const ordonnance = new Ordonnance({
         client_id: client_id,
         medecin_id: medecin_id,
@@ -66,7 +67,7 @@ const createOrdonnance = async (req, res) => {
 }
 
 const modifyOrdonnance = async (req, res) => {
-    const { id, pharmacien_id , medicaments} = req.body;
+    const { id, pharmacien_id, medicaments } = req.body;
     try {
 
         var ordonnance = await Ordonnance.findById(id);
@@ -83,11 +84,27 @@ const modifyOrdonnance = async (req, res) => {
     }
 }
 
+const validateOrdonnance = async (req, res) => {
+    const { id } = req.body;
+    try {
+        var ordonnance = await Ordonnance.findById(id);
+        if (!ordonnance) {
+            return res.status(404).json({ message: 'Ordonnance not found' });
+        }
+        ordonnance.expired = true;
+        await ordonnance.save();
+        res.status(200).json(ordonnance);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 
 
 
 
 
 
-module.exports = {createOrdonnance,modifyOrdonnance, getOrdonnance, getImages };
+
+
+module.exports = { createOrdonnance, modifyOrdonnance, getOrdonnance, getImages, validateOrdonnance };
 

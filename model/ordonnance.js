@@ -1,19 +1,19 @@
 const mongoose = require('mongoose');
 
 const ordonnanceSchema = new mongoose.Schema({
-    medecin_id : {
+    medecin_id: {
         type: String,
         required: true,
     },
-    client_id : {
+    client_id: {
         type: String,
         required: true,
     },
-    medicaments : {
+    medicaments: {
         type: Array,
         required: true,
     },
-    pharmacien_id : {
+    pharmacien_id: {
         type: String,
         required: false,
     },
@@ -21,7 +21,7 @@ const ordonnanceSchema = new mongoose.Schema({
         type: Date,
         required: true,
     },
-    expired : {
+    expired: {
         type: Boolean,
         required: true,
     }
@@ -30,4 +30,3 @@ const ordonnanceSchema = new mongoose.Schema({
 const Ordonnance = mongoose.model('ordonnances', ordonnanceSchema);
 
 module.exports = Ordonnance;
-    
