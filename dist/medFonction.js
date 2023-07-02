@@ -117,6 +117,7 @@ const declineMed = async (req, res) => {
             return res.status(404).json({ message: 'Med not found' });
         }
         const medObject = med.toObject();
+
         res.status(200).json(medObject);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -125,25 +126,30 @@ const declineMed = async (req, res) => {
 
 const changePasswordMed = async (req, res) => {
     const { id, password, newPassword } = req.body;
+    console.log(req.body);
     try {
-        const objectId = new ObjectId(id);
-
-        const Medecin = Meds.findById(objectId);
-        if (!Medecin) {
+        const objectId = new Object(id);
+        const med = await Meds.findById(objectId);
+        if (!med) {
             return res.status(404).json({ message: 'Medecin not found' });
         }
+        console.log(med);
 
-        const isPasswordCorrect = await bcrypt.compare(password, Medecin.password);
+
+
+
+        const isPasswordCorrect = await bcrypt.compare(password, med.password);
         if (!isPasswordCorrect) {
             return res.status(400).json({ message: 'Invalid credentials' });
         }
 
         const hashedPassword = await bcrypt.hash(newPassword, 10);
-        Medecin.password = hashedPassword;
-        await Medecin.save();
+        med.password = hashedPassword;
+        await med.save();
         res.status(200).json({ message: 'Password changed successfully' });
     } catch (error) {
         res.status(500).json({ message: error.message });
+        console.log(error);
     }
 }
 

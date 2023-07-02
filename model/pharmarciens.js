@@ -9,13 +9,13 @@ const pharmarcienSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    email : {
+    email: {
         type: String,
         required: true,
     },
     password: {
         type: String,
-        required: true,
+        required: false,
     },
     numberStreet: {
         type: String,
@@ -25,7 +25,7 @@ const pharmarcienSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    city : {
+    city: {
         type: String,
         required: true,
     },
@@ -33,7 +33,7 @@ const pharmarcienSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    phamarcieName : {
+    phamarcieName: {
         type: String,
         required: true,
     },
@@ -41,11 +41,11 @@ const pharmarcienSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    RPPS : {
+    RPPS: {
         type: String,
         required: true,
     },
-    validation : {
+    validation: {
         type: Boolean,
         required: true,
     },

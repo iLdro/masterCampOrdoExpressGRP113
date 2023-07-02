@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');  
+const mongoose = require('mongoose');
 
 const medsSchema = new mongoose.Schema({
     name: {
@@ -17,7 +17,7 @@ const medsSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    city : {
+    city: {
         type: String,
         required: true,
     },
@@ -41,18 +41,18 @@ const medsSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    RPPS : {
+    RPPS: {
         type: String,
         required: true,
     },
-    signature : {
+    signature: {
         type: String,
         required: true,
     },
-    validation : {
+    validation: {
         type: Boolean,
         required: true,
-    },intitule : {
+    }, intitule: {
         type: String,
         required: true,
     }
