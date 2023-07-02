@@ -103,6 +103,27 @@ const getPharmacienById = async (req, res) => {
     }
 }
 
+const changePasswordPharmacien = async (req, res) => {
+    const { id, password, newPassword } = req.body;
+    try {
+        const objectId = new Object(id);
+        const pharmacien = await Pharmacian.findById(objectId);
+        const isMatch = await bcrypt.compare(password, pharmacien.password);
+        if (isMatch) {
+            pharmacien.password = await bcrypt.hash(newPassword, 10);
+            await pharmacien.save();
+            res.status(200).json(pharmacien);
+        }
+        else {
+            res.status(404).json({ message: "Mot de passe incorrect" });
+        }
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
 
 
-module.exports = { createPharmacian, getPendingPharmacien, validatePharmacien, declinePharmarcien, getPharmacienById };
+
+
+
+module.exports = { createPharmacian, getPendingPharmacien, validatePharmacien, declinePharmarcien, getPharmacienById, changePasswordPharmacien };

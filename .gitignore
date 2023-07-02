@@ -21,3 +21,4 @@ pnpm-debug.log*
 *.sw?
 *.env
 dist/ordonnance.js
+app.js
