@@ -200,7 +200,7 @@ app.post('/med/getUserById', (req, res) => {
 }
 );
 
-app; post('/ordonnance/getPharmacian', (req, res) => {
+app.post('/ordonnance/getPharmacian', (req, res) => {
   getPharmacienById(req, res);
 }
 );
