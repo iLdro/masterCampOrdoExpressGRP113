@@ -146,7 +146,7 @@ const startAdminSession = async (req, res) => {
       return res.status(401).send('Wrong password');
     }
 
-    const token = jwt.sign({ id: admin._id, userType: 4 }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ id: admin._id, userType: 0 }, process.env.JWT_SECRET, { expiresIn: '1h' });
     try {
       req.session.token = token;
       req.session.user = admin;
